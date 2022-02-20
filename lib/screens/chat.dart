@@ -128,8 +128,13 @@ class ChatItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _read = context.read<ChatViewModel>();
     final authorNameFirstLetter = message.author.name[0];
+    final isAuthor = _read.localName == message.author.name;
     return ListTile(
+      tileColor: isAuthor
+          ? Theme.of(context).primaryColor.withOpacity(.3)
+          : Colors.white,
       leading: _CircleAvatarWithName(authorNameFirstLetter),
       title: Text(
         message.author.name,

@@ -15,10 +15,13 @@ class ChatViewModel extends ChangeNotifier {
   final _nicknameController = TextEditingController();
   final _messageController = TextEditingController();
   List<ChatMessageDto> _messages = [];
+
   // final Location _location = Location();
+  String _localName = '';
 
   List<ChatMessageDto> get messages => _messages;
   String? get errorMessage => _errorMessage;
+  String get localName => _localName;
   TextEditingController get nicknameController => _nicknameController;
   TextEditingController get messageController => _messageController;
 
@@ -46,6 +49,7 @@ class ChatViewModel extends ChangeNotifier {
     try {
       final nickname = _nicknameController.text.trim();
       final message = _messageController.text.trim();
+      _localName = nickname;
       _messages = await chatRepository.sendMessage(nickname, message);
     } on InvalidNameException catch (e) {
       final snackBar = SnackBar(
